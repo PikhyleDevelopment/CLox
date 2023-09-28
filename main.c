@@ -22,7 +22,8 @@ static void repl() {
 }
 
 static char* readFile(const char* path) {
-	FILE* file = fopen_s(&file, path, "rb");
+#pragma warning(suppress : 4996) // Suppress the deprecation warning/error for fopen until we get fopen_s() working
+	FILE* file = fopen(path, "rb");
 	if (file == NULL) {
 		fprintf(stderr, "Could not open file \"%s\".\n", path);
 		exit(74);
@@ -48,6 +49,7 @@ static char* readFile(const char* path) {
 	fclose(file);
 	return buffer;
 }
+
 
 static void runFile(const char* path) {
 	char* source = readFile(path);
