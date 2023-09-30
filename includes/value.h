@@ -1,4 +1,3 @@
-#pragma once
 #ifndef clox_value_h
 #define clox_value_h
 

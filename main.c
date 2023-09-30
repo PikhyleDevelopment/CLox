@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "includes/common.h"
-#include "includes/chunk.h"
-#include "includes/debug.h"
 #include "includes/vm.h"
 
 static void repl() {
@@ -22,7 +19,7 @@ static void repl() {
 }
 
 static char* readFile(const char* path) {
-#pragma warning(suppress : 4996) // Suppress the deprecation warning/error for fopen until we get fopen_s() working
+//#pragma warning(suppress : 4996) // Suppress the deprecation warning/error for fopen until we get fopen_s() working
 	FILE* file = fopen(path, "rb");
 	if (file == NULL) {
 		fprintf(stderr, "Could not open file \"%s\".\n", path);

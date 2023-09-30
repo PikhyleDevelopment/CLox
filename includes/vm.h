@@ -1,4 +1,3 @@
-#pragma once
 #ifndef clox_vm_h
 #define clox_vm_h
 
