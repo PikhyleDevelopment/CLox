@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "common.h"
-#include "compiler.h"
-#include "scanner.h"
+#include "includes/common.h"
+#include "includes/compiler.h"
+#include "includes/scanner.h"
 
 #ifdef DEBUG_PRINT_CODE
-#include "debug.h"
+#include "includes/debug.h"
 #endif // DEBUG_PRINT_CODE
 
 
