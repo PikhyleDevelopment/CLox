@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "includes/common.h"
 #include "includes/compiler.h"
@@ -9,7 +10,32 @@
 #include "includes/memory.h"
 #include "includes/vm.h"
 
+static void runtimeError(const char *format, ...);
+
 VM vm;
+
+static Value clockNative(int argCount, Value *args) {
+    if (argCount > 0) {
+        runtimeError("Native function clock() expects 0 arguments.");
+        return NIL_VAL;
+    }
+    return NUMBER_VAL((double) clock() / CLOCKS_PER_SEC);
+}
+
+static Value printLineNative(int argCount, Value *args) {
+    if (argCount < 0 || argCount > 1) {
+        runtimeError("Native function println() expects either 0 or 1 arguments.");
+        return NIL_VAL;
+    }
+    if (argCount != 1) {
+        printf("\n");
+        return NIL_VAL;
+    }
+
+    printValue(args[0]);
+    printf("\n");
+    return NIL_VAL;
+}
 
 static void resetStack() {
     vm.stackTop = vm.stack;
@@ -38,12 +64,23 @@ static void runtimeError(const char *format, ...) {
     resetStack();
 }
 
+static void defineNative(const char *name, NativeFn function) {
+    push(OBJ_VAL(copyString(name, (int) strlen(name))));
+    push(OBJ_VAL(newNative(function)));
+    tableSet(&vm.globals, AS_STRING(vm.stack[0]), vm.stack[1]);
+    pop();
+    pop();
+}
+
 void initVM() {
     resetStack();
     vm.objects = NULL;
 
     initTable(&vm.globals);
     initTable(&vm.strings);
+
+    defineNative("clock", clockNative);
+    defineNative("println", printLineNative);
 }
 
 void freeVM() {
@@ -89,6 +126,13 @@ static bool callValue(Value callee, int argCount) {
         switch (OBJ_TYPE(callee)) {
             case OBJ_FUNCTION:
                 return call(AS_FUNCTION(callee), argCount);
+            case OBJ_NATIVE: {
+                NativeFn native = AS_NATIVE(callee);
+                Value result = native(argCount, vm.stackTop - argCount);
+                vm.stackTop -= argCount + 1;
+                push(result);
+                return true;
+            }
             default:
                 break; // Non-callable object type.
         }
@@ -248,11 +292,11 @@ static InterpretResult run() {
                 }
                 push(NUMBER_VAL(-AS_NUMBER(pop())));
                 break;
-            case OP_PRINT: {
-                printValue(pop());
-                printf("\n");
-                break;
-            }
+                /*case OP_PRINT: {
+                    printValue(pop());
+                    printf("\n");
+                    break;
+                }*/
             case OP_JUMP: {
                 uint16_t offset = READ_SHORT();
                 frame->ip += offset;

@@ -659,11 +659,11 @@ static void ifStatement() {
     patchJump(elseJump);
 }
 
-static void printStatement() {
+/*static void printStatement() {
     expression();
     consume(TOKEN_SEMICOLON, "Expect ';' after value.");
     emitByte(OP_PRINT);
-}
+}*/
 
 static void returnStatement() {
     if (current->type == TYPE_SCRIPT) {
@@ -729,9 +729,9 @@ static void declaration() {
 }
 
 static void statement() {
-    if (match(TOKEN_PRINT)) {
+    /*if (match(TOKEN_PRINT)) {
         printStatement();
-    } else if (match(TOKEN_RETURN)) {
+    } else */if (match(TOKEN_RETURN)) {
         returnStatement();
     } else if (match(TOKEN_WHILE)) {
         whileStatement();

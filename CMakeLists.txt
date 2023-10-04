@@ -25,4 +25,5 @@ add_executable(CLox
         scanner.c
         table.c
         value.c
-        vm.c)
+        vm.c
+)
