@@ -1,5 +1,4 @@
-#ifndef clox_table_h
-#define clox_table_h
+#pragma once
 
 #include "common.h"
 #include "value.h"
@@ -30,4 +29,6 @@ void tableAddAll(Table *from, Table *to);
 ObjString *tableFindString(Table *table, const char *chars,
                            int length, uint32_t hash);
 
-#endif // !clox_table_h
+void tableRemoveWhite(Table* table);
+
+void markTable(Table* table);

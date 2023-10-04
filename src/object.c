@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../includes/memory.h"
-#include "../includes/object.h"
-#include "../includes/table.h"
-#include "../includes/value.h"
-#include "../includes/vm.h"
+#include "memory.h"
+#include "object.h"
+#include "table.h"
+#include "value.h"
+#include "vm.h"
 
 #define ALLOCATE_OBJ(type, objectType) \
     (type*)allocateObject(sizeof(type), objectType)
@@ -13,9 +13,15 @@
 static Obj *allocateObject(size_t size, ObjType type) {
     Obj *object = (Obj *) reallocate(NULL, 0, size);
     object->type = type;
+    object->isMarked = false;
 
     object->next = vm.objects;
     vm.objects = object;
+
+#ifdef DEBUG_LOG_GC
+    printf("%p allocate %zu for %d\n", (void*)object, size, type);
+#endif // DEBUG_LOG_GC
+
     return object;
 }
 
@@ -53,7 +59,10 @@ static ObjString *allocateString(char *chars, int length, uint32_t hash) {
     string->length = length;
     string->chars = chars;
     string->hash = hash;
+
+    push(OBJ_VAL(string));
     tableSet(&vm.strings, string, NIL_VAL);
+    pop();
     return string;
 }
 

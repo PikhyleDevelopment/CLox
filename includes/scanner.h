@@ -1,5 +1,4 @@
-#ifndef clox_scanner_h
-#define clox_scanner_h
+#pragma once
 
 typedef enum {
     // Single-character tokens.
@@ -34,4 +33,3 @@ void initScanner(const char *source);
 
 Token scanToken();
 
-#endif // !clox_scanner_h

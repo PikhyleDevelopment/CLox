@@ -1,5 +1,4 @@
-#ifndef clox_common_h
-#define clox_common_h
+#pragma once
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -9,6 +8,8 @@
 
 #define DEBUG_TRACE_EXECUTION
 
-#define UINT8_COUNT (UINT8_MAX + 1)
+//#define DEBUG_STRESS_GC
 
-#endif // !clox_common_h
+#define DEBUG_LOG_GC
+
+#define UINT8_COUNT (UINT8_MAX + 1)

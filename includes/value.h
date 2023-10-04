@@ -1,5 +1,4 @@
-#ifndef clox_value_h
-#define clox_value_h
+#pragma once
 
 #include "common.h"
 
@@ -52,4 +51,3 @@ void freeValueArray(ValueArray *array);
 
 void printValue(Value value);
 
-#endif // !clox_value_h
