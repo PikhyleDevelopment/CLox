@@ -1,5 +1,4 @@
-#ifndef clox_memory_h
-#define clox_memory_h
+#pragma once
 
 #include "common.h"
 #include "object.h"
@@ -21,6 +20,10 @@
 
 void *reallocate(void *pointer, size_t oldSize, size_t newSize);
 
-void freeObjects();
+void markObject(Obj* object);
 
-#endif // !clox_memory_h
+void markValue(Value value);
+
+void collectGarbage();
+
+void freeObjects();

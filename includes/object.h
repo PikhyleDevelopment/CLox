@@ -1,5 +1,4 @@
-#ifndef clox_object_h
-#define clox_object_h
+#pragma once
 
 #include "common.h"
 #include "chunk.h"
@@ -28,6 +27,7 @@ typedef enum {
 
 struct Obj {
 	ObjType type;
+	bool isMarked;
 	struct Obj* next;
 };
 
@@ -84,5 +84,3 @@ void printObject(Value value);
 static inline bool isObjType(Value value, ObjType type) {
 	return IS_OBJ(value) && AS_OBJ(value)->type == type;
 }
-
-#endif // !clox_object_h

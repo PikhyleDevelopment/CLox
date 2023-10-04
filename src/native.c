@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "../includes/vm.h"
+#include "vm.h"
 
 
 

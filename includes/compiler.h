@@ -1,9 +1,8 @@
-#ifndef clox_compiler_h
-#define clox_compiler_h
+#pragma once
 
 #include "object.h"
 #include "vm.h"
 
 ObjFunction *compile(const char *source);
+void markCompilerRoots();
 
-#endif // !clox_compiler_h

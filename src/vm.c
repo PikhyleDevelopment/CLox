@@ -3,13 +3,13 @@
 #include <string.h>
 #include <time.h>
 
-#include "../includes/common.h"
-#include "../includes/compiler.h"
-#include "../includes/debug.h"
-#include "../includes/native.h"
-#include "../includes/object.h"
-#include "../includes/memory.h"
-#include "../includes/vm.h"
+#include "common.h"
+#include "compiler.h"
+#include "debug.h"
+#include "native.h"
+#include "object.h"
+#include "memory.h"
+#include "vm.h"
 
 VM vm;
 
@@ -52,6 +52,9 @@ static void defineNative(const char *name, NativeFn function) {
 void initVM() {
     resetStack();
     vm.objects = NULL;
+    vm.grayCount = 0;
+    vm.grayCapacity = 0;
+    vm.grayStack = NULL;
 
     initTable(&vm.globals);
     initTable(&vm.strings);

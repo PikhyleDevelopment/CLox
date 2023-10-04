@@ -1,5 +1,4 @@
-#ifndef clox_vm_h
-#define clox_vm_h
+#pragma once
 
 #include "object.h"
 #include "chunk.h"
@@ -24,6 +23,9 @@ typedef struct {
     Table strings;
     ObjUpvalue* openUpvalues;
     Obj *objects;
+    int grayCount;
+    int grayCapacity;
+    Obj** grayStack;
 } VM;
 
 typedef enum {
@@ -45,5 +47,3 @@ void push(Value value);
 Value pop();
 
 void runtimeError(const char* format, ...);
-
-#endif // !clox_vm_h
