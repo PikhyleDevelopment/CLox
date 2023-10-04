@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "includes/common.h"
-#include "includes/vm.h"
+#include "../includes/common.h"
+#include "../includes/vm.h"
 
 static void repl() {
     char line[1024];

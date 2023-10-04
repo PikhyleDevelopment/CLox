@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "includes/common.h"
-#include "includes/compiler.h"
-#include "includes/scanner.h"
+#include "../includes/common.h"
+#include "../includes/compiler.h"
+#include "../includes/scanner.h"
 
 #ifdef DEBUG_PRINT_CODE
 
-#include "includes/debug.h"
+#include "../includes/debug.h"
 
 #endif // DEBUG_PRINT_CODE
 

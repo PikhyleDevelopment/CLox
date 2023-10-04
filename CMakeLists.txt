@@ -11,19 +11,20 @@ add_executable(CLox
         includes/compiler.h
         includes/debug.h
         includes/memory.h
+        includes/native.h
         includes/object.h
         includes/scanner.h
         includes/table.h
         includes/value.h
         includes/vm.h
-        chunk.c
-        compiler.c
-        debug.c
-        main.c
-        memory.c
-        object.c
-        scanner.c
-        table.c
-        value.c
-        vm.c
-)
+        src/chunk.c
+        src/compiler.c
+        src/debug.c
+        src/main.c
+        src/memory.c
+        src/native.c
+        src/object.c
+        src/scanner.c
+        src/table.c
+        src/value.c
+        src/vm.c)
