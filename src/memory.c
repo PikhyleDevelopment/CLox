@@ -74,6 +74,18 @@ static void blackenObject(Obj* object) {
 #endif // DEBUG_LOG_GC
 
     switch (object->type) {
+        case OBJ_BOUND_METHOD: {
+            ObjBoundMethod* bound = (ObjBoundMethod*)object;
+            markValue(bound->receiver);
+            markObject((Obj*)bound->method);
+            break;
+        }
+        case OBJ_CLASS: {
+            ObjClass* loxClass = (ObjClass*)object;
+            markObject((Obj*)loxClass->name);
+            markTable(&loxClass->methods);
+            break;
+        }
         case OBJ_CLOSURE: {
             ObjClosure* closure = (ObjClosure*)object;
             markObject((Obj*)closure->function);
@@ -86,6 +98,12 @@ static void blackenObject(Obj* object) {
             ObjFunction* function = (ObjFunction*)object;
             markObject((Obj*)function->name);
             markArray(&function->chunk.constants);
+            break;
+        }
+        case OBJ_INSTANCE: {
+            ObjInstance* instance = (ObjInstance*)object;
+            markObject((Obj*)instance->loxClass);
+            markTable(&instance->fields);
             break;
         }
         case OBJ_UPVALUE:
@@ -103,6 +121,16 @@ static void freeObject(Obj *object) {
 #endif // DEBUG_LOG_GC
 
     switch (object->type) {
+        case OBJ_BOUND_METHOD: {
+            FREE(ObjBoundMethod, object);
+            break;
+        }
+        case OBJ_CLASS: {
+            ObjClass* loxClass = (ObjClass*)object;
+            freeTable(&loxClass->methods);
+            FREE(ObjClass, object);
+            break;
+        }
         case OBJ_CLOSURE: {
             ObjClosure* closure = (ObjClosure*)object;
             FREE_ARRAY(ObjUpvalue*, closure->upvalues, closure->upvalueCount);
@@ -113,6 +141,12 @@ static void freeObject(Obj *object) {
             ObjFunction *function = (ObjFunction *) object;
             freeChunk(&function->chunk);
             FREE(ObjFunction, object);
+            break;
+        }
+        case OBJ_INSTANCE: {
+            ObjInstance* instance = (ObjInstance*)object;
+            freeTable(&instance->fields);
+            FREE(ObjInstance, object);
             break;
         }
         case OBJ_NATIVE:
