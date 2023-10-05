@@ -1,0 +1,10 @@
+class MyClass {
+    myName(firstName, lastName, setA) {
+        this.a = setA;
+        println("Name is: " + firstName + " " + lastName);
+    }
+}
+
+var newClass = MyClass();
+newClass.myName("Erik", "Mason", 5);
+println(newClass.a);
