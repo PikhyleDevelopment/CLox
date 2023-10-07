@@ -1,0 +1,15 @@
+class A {
+	method() {
+		println("A");
+	}
+}
+
+class B < A {
+	method() {
+		var closure = super.method;
+		closure(); // Prints "A".
+	}
+}
+
+var newClass = B();
+newClass.method();

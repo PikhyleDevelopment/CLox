@@ -33,7 +33,13 @@ bld/
 [Ll]og/
 [Ll]ogs/
 [Bb]uild/
-
+.cproject
+.project
+.settings
+GRTAGS
+GTAGS
+GPATH
+*.swp
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 .vscode/
